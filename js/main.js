@@ -44,10 +44,10 @@ function validateYear() {
 }
 
 // &prevent user from entering wrong date (eg: 31/04/2005), April has 30 days only
-function validateDayNo(arr, isLeap, userBirthDate) {
+function validateDayNo(arr, isLeap) {
   if (month.value != 2) {
-    // * when user type 31 days in a 30day month, the browser automatically increase the month by one,
-    //* that's why I checked here for userBirthDate.getMonth() not userBirthDate.getMonth() + 1
+    // * when user type 31 days in a 30day month, the browser automatically increases the month by one,
+    //* that's why I checked here on userBirthDate.getMonth() not userBirthDate.getMonth() + 1
     for (let i = 0; i < arr.length; i++) {
       if (month.value == arr[i] && day.value == 31) {
         day.nextElementSibling.textContent = "this month has 30 days only";
@@ -66,6 +66,24 @@ function validateDayNo(arr, isLeap, userBirthDate) {
     }
   }
   return true;
+}
+
+// & to calculate days by subtracting no of days in a month from the calculation when the user
+// &birth day is graeter than the current day
+function getDaysNo(isLeap) {
+  months30D.forEach((monthValue) => {
+    if (month.value == monthValue) {
+      monthDays = 30;
+    }
+  });
+  if (month.value == 2) {
+    if (isLeap) {
+      monthDays = 29;
+    } else {
+      monthDays = 28;
+    }
+  }
+  return monthDays;
 }
 
 // * step 1 & 2
@@ -120,7 +138,11 @@ form.addEventListener("submit", function (e) {
     if (currentDate.getDate() > userBirthDate.getDate()) {
       calculatedDays = currentDate.getDate() - userBirthDate.getDate();
     } else if (currentDate.getDate() < userBirthDate.getDate()) {
-      calculatedDays = userBirthDate.getDate() - currentDate.getDate();
+      calculatedDays =
+        getDaysNo(isLeapYear) -
+        (userBirthDate.getDate() - currentDate.getDate());
+
+      calculatedMonths = calculatedMonths - 1;
     } else if (currentDate.getDate() == userBirthDate.getDate()) {
       calculatedDays = 0;
     }
@@ -137,6 +159,8 @@ form.addEventListener("submit", function (e) {
     } else if (currentDate.getMonth() == userBirthDate.getMonth()) {
       calculatedMonths = 0;
     }
+
+    calculateDays();
   }
 
   // ^ calculate year
@@ -156,9 +180,8 @@ form.addEventListener("submit", function (e) {
       validateDay() &&
       validateMonth() &&
       validateYear() &&
-      validateDayNo(months30D, isLeapYear, userBirthDate)
+      validateDayNo(months30D, isLeapYear)
     ) {
-      calculateDays();
       calculateMonths();
       calculateYear();
       userDay.textContent = calculatedDays;
