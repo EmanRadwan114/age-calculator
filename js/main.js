@@ -45,6 +45,7 @@ function validateYear() {
 
 // &prevent user from entering wrong date (eg: 31/04/2005), April has 30 days only
 function validateDayNo(arr, isLeap) {
+  day.nextElementSibling.textContent = "";
   if (month.value != 2) {
     // * when user type 31 days in a 30day month, the browser automatically increases the month by one,
     //* that's why I checked here on userBirthDate.getMonth() not userBirthDate.getMonth() + 1
@@ -55,11 +56,11 @@ function validateDayNo(arr, isLeap) {
       }
     }
   } else {
-    if (isLeap && day.value > 29) {
+    if (isLeap() && day.value > 29) {
       day.nextElementSibling.textContent =
         "this is a leap year, enter a day between 1 - 29";
       return false;
-    } else if (!isLeap && day.value >= 29) {
+    } else if (!isLeap() && day.value >= 29) {
       day.nextElementSibling.textContent =
         "this is not a leap year, enter a day between 1 - 28";
       return false;
@@ -77,7 +78,7 @@ function getDaysNo(isLeap) {
     }
   });
   if (month.value == 2) {
-    if (isLeap) {
+    if (isLeap()) {
       monthDays = 29;
     } else {
       monthDays = 28;
@@ -127,12 +128,13 @@ form.addEventListener("submit", function (e) {
   //   & step 4
   const currentDate = new Date();
   const userBirthDate = new Date(`${year.value}-${month.value}-${day.value}`);
-  const isLeapYear =
-    currentDate.getFullYear() % 4 === 0
-      ? currentDate.getFullYear() % 100 === 0
-      : currentDate.getFullYear() % 400 === 0;
   let calculatedMonths, calculatedDays, calculatedYears;
 
+  function isLeapYear() {
+    if (userBirthDate.getFullYear() % 400 === 0) return true;
+    if (userBirthDate.getFullYear() % 100 === 0) return false;
+    return userBirthDate.getFullYear() % 4 === 0;
+  }
   //   ^calculate days
   function calculateDays() {
     if (currentDate.getDate() > userBirthDate.getDate()) {
