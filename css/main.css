@@ -1,0 +1,209 @@
+/* *general styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "poppins";
+  src: url(../assets/fonts/Poppins-Regular.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: "poppins";
+  src: url(../assets/fonts/Poppins-Bold.ttf);
+  font-weight: 600;
+}
+@font-face {
+  font-family: "poppins";
+  src: url(../assets/fonts/Poppins-ExtraBold.ttf);
+  font-weight: 800;
+}
+@font-face {
+  font-family: "poppins";
+  src: url(../assets/fonts/Poppins-ExtraBoldItalic.ttf);
+  font-style: italic;
+  font-weight: 800;
+}
+
+:root {
+  --purple: hsl(259, 100%, 65%);
+  --lightRed: hsl(0, 100%, 67%);
+  --white: hsl(0, 0%, 100%);
+  --lightGrey: hsl(0, 0%, 86%);
+  --smokeyGrey: hsl(0, 1%, 44%);
+  --OffBlack: hsl(0, 0%, 8%);
+  font-family: "poppins", sans-serif;
+}
+/* *common styles */
+
+form,
+main,
+.formControl {
+  display: flex;
+}
+/* *main section */
+main {
+  background-color: var(--lightGrey);
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.calculatorContainer {
+  background-color: var(--white);
+  padding: 2.5rem;
+  border-radius: 15px 15px 30% 15px;
+  width: 50%;
+}
+
+form {
+  column-gap: 0.85rem;
+  border-bottom: 1px solid var(--lightGrey);
+  padding-bottom: 1.5rem;
+  align-items: start;
+  margin-bottom: 2.5rem;
+}
+
+.formControl input[type="number"] {
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding: 0.75rem;
+  margin: 10px 0;
+  width: calc(100% - 0.85rem);
+  border-radius: 3px;
+  outline: 1px solid var(--lightGrey);
+  border: none;
+}
+
+.formControl input[type="number"]:focus-visible {
+  outline: 1px solid var(--purple);
+}
+
+/* *remove arrows from input type number */
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.formControl {
+  width: calc(100% / 3);
+  justify-content: center;
+  flex-direction: column;
+}
+
+.submitBtn {
+  align-self: flex-end;
+}
+
+input[type="image"] {
+  width: 65px;
+  background-color: var(--purple);
+  border-radius: 50%;
+  padding: 1rem;
+  transform: translateY(100%);
+  transition: background-color 300ms;
+}
+
+input[type="image"]:hover {
+  background-color: var(--OffBlack);
+}
+
+label {
+  font-weight: 600;
+  color: var(--smokeyGrey);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+}
+
+.ageCalculation p {
+  font-size: calc(3.5rem + 0.5vw);
+  font-weight: 800;
+  font-style: italic;
+  color: var(--OffBlack);
+}
+.ageCalculation span {
+  color: var(--purple);
+}
+
+.errMsg {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--lightRed);
+  margin: 5px 0;
+}
+
+/* *media query */
+@media screen and (max-width: 1200px) {
+  .calculatorContainer {
+    width: 60%;
+  }
+
+  .ageCalculation p {
+    font-size: calc(3.2rem + 0.5vw);
+  }
+}
+@media screen and (max-width: 992px) {
+  .calculatorContainer {
+    width: 70%;
+  }
+
+  .ageCalculation p {
+    font-size: calc(2.8rem + 0.5vw);
+  }
+}
+@media screen and (max-width: 768px) {
+  .calculatorContainer {
+    width: 90%;
+  }
+
+  .ageCalculation p {
+    font-size: 2.5rem;
+  }
+
+  form {
+    column-gap: 5px;
+    padding-bottom: 3rem;
+    position: relative;
+  }
+
+  .formControl input[type="number"] {
+    font-size: 1.3rem;
+    width: calc(100% - 5px);
+  }
+  .calculatorContainer {
+    padding: 1.2rem;
+  }
+
+  input[type="image"] {
+    width: 55px;
+    padding: 0.8rem;
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, 50%);
+  }
+}
+@media screen and (max-width: 567px) {
+  .formControl input[type="number"] {
+    font-size: 0.85rem;
+    padding: 0.85rem 0.3rem;
+  }
+
+  .errMsg {
+    font-size: 0.7rem;
+  }
+
+  .ageCalculation p {
+    font-size: 1.5rem;
+  }
+}
